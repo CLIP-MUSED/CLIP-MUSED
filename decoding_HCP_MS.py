@@ -136,7 +136,8 @@ def trainer(args, root_path):
 
             for key in loss_list:
                 summary.add_scalar(split+'/'+key, loss_dict[key][split]/(i+1), epoch+1)
-
+                
+    torch.save(model.state_dict(), os.path.join(model_dir, 'model.pth'))
     model.load_state_dict(torch.load(os.path.join(model_dir, 'model.pth')))
     summary.close()
     score_final = test(args, model, data_loader['val'], met_list)
